@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- default -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="bootstrap.css">
+        <link rel="stylesheet" href="style.css">
+        <!-- production version, optimized for size and speed -->
+        <script src="vue.js"></script>
+    </head>
+    <body>
+        <!-- app -->
+        <div id="app">
+            <div class="container">
+                <!-- new row -->
+                <div class="row">
+                    <!-- template-login -->
+                    <div v-if="templateLogin" class="template-login col-md-12">
+                        <div class="header">
+                            <div class="heater-title btn btn-primary btn-block">
+                                <h1>{{headerUsers}}</h1>
+                            </div>
+                            <h1 class="text-center">Login</h1>
+                        </div>
+                        <hr>
+                        <div class="section text-center">
+                            <form class="form-group">
+                                <div class="col-md-12 text-center">
+                                    <label for="username"><h4>Username:</h4></label>
+                                </div>
+                                <div class="col-md-3 text-center form-inline text-center">
+                                    <input v-model="username" class="form-control" type="text" id="username" placeholder="username">
+                                </div>
+                                <p><i>Account of administrator is "admin"</i></p>
+                                <p class="loginText">{{loginText}}</p>
+                                <div class="col-md-12 text-center">
+                                    <button v-on:click="login" type="submit" class="btn btn-primary mb-2">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                        <hr>
+                        <div class="footer  btn-primary btn-block text-center">
+                            <h1><i>{{footer}}</i></h1>
+                            <p><b>facebook</b> - <i>{{footer1}}</i></p>
+                            <p><b>email</b> - <i>{{footer2}}</i></p>
+                            <p><b>github</b> - <i>{{footer3}}</i></p>
+                        </div>
+                    </div>
+                    <!-- end template-login -->
+                </div>
+                <!-- end row -->
+                <!-- new row -->
+                <div class="row">
+                    <!-- template-main -->
+                    <div v-if="templateMain" class="template-main col-md-12">
+                        <div class="header">
+                            <div class="heater-title btn btn-primary btn-block">
+                                <h1>{{headerUsers}}</h1>
+                                <h2>{{username}}</h2>
+                            </div>
+                            <h1 v-if="!adminLogged">Main</h1>
+                            <h1 v-if="adminLogged" v-on:click="switcher" class="btn btn-warning">           {{changeMainAdmin}}
+                            </h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo non eveniet dolorem totam ex odit maiores soluta illo temporibus, consequatur, explicabo quisquam sunt, autem amet pariatur vero. Deserunt rem, eius.</p>
+                        </div>
+                        <hr>
+                        <div class="section">
+                            <h4>Notices:</h4>
+                            <p class="noticesTextList"><i>{{noticesTextList}}</i></p>
+                            <ol>
+                                <li v-for="(notice, index) in notices">
+                                    <p><b>{{notice.title}}</b></p>
+                                    <p>{{notice.description}}</p>
+                                    <p>{{notice.created}}</p>
+                                </li>
+                            </ol>
+                        </div>
+                        <hr>
+                        <div class="footer  btn-primary btn-block text-center">
+                            <h1><i>{{footer}}</i></h1>
+                            <p><b>facebook</b> - <i>{{footer1}}</i></p>
+                            <p><b>email</b> - <i>{{footer2}}</i></p>
+                            <p><b>github</b> - <i>{{footer3}}</i></p>
+                        </div>
+                    </div>
+                    <!-- end template-main -->
+                </div>
+                <!-- end row -->
+                <!-- new row -->
+                <div class="row">
+                    <!-- template-admin -->
+                    <div v-if="templateAdmin" class="template-admin col-md-12">
+                        <div class="header">
+                            <div class="heater-title btn btn-primary btn-block">
+                                <h1>{{headerAdmin}}</h1>
+                                <h2>{{username}}</h2>
+                            </div>
+                            <h1 v-if="!adminLogged">Main</h1>
+                            <h1 v-if="adminLogged" v-on:click="switcher" class="btn btn-warning">           {{changeMainAdmin}}
+                            </h1>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, laboriosam. Ab neque sapiente error excepturi expedita quia ad, enim iusto sed omnis, assumenda ut adipisci esse doloremque illum labore voluptates!</p>
+                        </div>
+                        <hr>
+                        <div class="section">
+                            <div v-if="!updateState" class="create">
+                                <h4>Create</h4>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="inputTitle">Title</label>
+                                        <input v-model="title" class="form-control" type="text" id="inputTitle">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputDescription">Description</label>
+                                        <input v-model="description" class="form-control" type="text" id="inputDescription">
+                                    </div>
+                                    <button v-on:click="create" class="btn btn-success btn-block">Create</button>
+                                </form>
+                                <div class="box-msg" id="box-msg">
+                                    <p v-if="msgVoidView" class="text-center msgVoid">{{msgVoid}}</p>
+                                    <p v-if="msgCompleteView" class="text-center msgComplete">{{msgComplete}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="manager">
+                                <div v-if="updateState" class="update">
+                                    <h4>Update</h4>
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="inputTitle">Title</label>
+                                            <input v-model="noticeUpdateTitle" class="form-control" type="text" id="inputTitle" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputDescription">Description</label>
+                                            <input v-model="noticeUpdateDescription" class="form-control" type="text" id="inputDescription" value="">
+                                        </div>
+                                        <p class="updateText text-center">{{updateText}}</p>
+                                        <button v-on:click="update2" class="btn btn-success btn-block">Update</button>
+                                    </form>
+                                </div>
+                                <div v-else class="notUpdate">
+                                    <h4>Manager</h4>
+                                    <ol>
+                                        <li v-for="(notice, index) in notices">
+                                            <p><b>{{notice.title}}</b></p>
+                                            <p>{{notice.description}}</p>
+                                            <p>{{notice.created}}</p>
+                                            <button v-on:click="update1({notice, index})" class="btn btn-warning">update</button>
+                                            <button v-on:click="deleter({index})" class="btn btn-danger">delete</button>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="footer  btn-primary btn-block text-center">
+                            <h1><i>{{footer}}</i></h1>
+                            <p><b>facebook</b> - <i>{{footer1}}</i></p>
+                            <p><b>email</b> - <i>{{footer2}}</i></p>
+                            <p><b>github</b> - <i>{{footer3}}</i></p>
+                        </div>
+                    </div>
+                    <!-- end template-admin -->
+                </div>
+                <!-- end row  -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end app -->
+        <!-- scripts -->
+        <script src="script.js"></script>
+    </body>
+</html>
