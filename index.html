@@ -24,6 +24,7 @@
                             <div class="heater-title btn btn-primary btn-block">
                                 <h1>{{headerUsers}}</h1>
                             </div>
+                            <hr>
                             <h1 class="text-center">Login</h1>
                         </div>
                         <hr>
@@ -32,22 +33,24 @@
                                 <div class="col-md-12 text-center">
                                     <label for="username"><h4>Username:</h4></label>
                                 </div>
-                                <div class="col-md-3 text-center form-inline text-center">
+                                <div class="col-md text-center ">
                                     <input v-model="username" class="form-control" type="text" id="username" placeholder="username">
                                 </div>
                                 <p><i>Account of administrator is "admin"</i></p>
-                                <p class="loginText">{{loginText}}</p>
+                                <div v-if="alerts.msgLoginView" class="alert alert-danger justify-content-center" role="alert">
+                                    {{alerts.msgLoginText}}
+                                </div>
                                 <div class="col-md-12 text-center">
-                                    <button v-on:click="login" type="submit" class="btn btn-primary mb-2">Login</button>
+                                    <button v-on:click="login" type="submit" class="btn btn-primary btn-block">Login</button>
                                 </div>
                             </form>
                         </div>
                         <hr>
-                        <div class="footer  btn-primary btn-block text-center">
-                            <h1><i>{{footer}}</i></h1>
-                            <p><b>facebook</b> - <i>{{footer1}}</i></p>
-                            <p><b>email</b> - <i>{{footer2}}</i></p>
-                            <p><b>github</b> - <i>{{footer3}}</i></p>
+                        <div class="footer">
+                            <h1 class="d-flex justify-content-end"><i>{{footer}}</i></h1>
+                            <p class="d-flex justify-content-end"><b>facebook</b><i>{{footer1}}</i></p>
+                            <p class="d-flex justify-content-end"><b>email</b><i>{{footer2}}</i></p>
+                            <p class="d-flex justify-content-end"><b>github</b><i>{{footer3}}</i></p>
                         </div>
                     </div>
                     <!-- end template-login -->
@@ -61,31 +64,41 @@
                             <div class="heater-title btn btn-primary btn-block">
                                 <h1>{{headerUsers}}</h1>
                                 <h2>{{username}}</h2>
-                                <button v-on:click="logout" class="btn btn-danger">logout</button>
+                                <button v-on:click="logout" class="btn btn-danger btn-block">logout</button>
                             </div>
+                            <hr>
                             <h1 v-if="!adminLogged">Main</h1>
-                            <h1 v-if="adminLogged" v-on:click="switcher" class="btn btn-warning">           {{changeMainAdmin}}
+                            <h1 v-if="adminLogged" v-on:click="switcher" class="btn btn-warning btn-block">     {{changeMainAdmin}}
                             </h1>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo non eveniet dolorem totam ex odit maiores soluta illo temporibus, consequatur, explicabo quisquam sunt, autem amet pariatur vero. Deserunt rem, eius.</p>
                         </div>
                         <hr>
                         <div class="section">
                             <h4>Notices:</h4>
-                            <p class="noticesTextList"><i>{{noticesTextList}}</i></p>
+                            <div v-if="alerts.msgListNoticesVoidMainView" class="alert alert-danger" role="alert">
+                                <p><i>{{alerts.msgListNoticesVoidMainText}}</i></p>
+                            </div>
                             <ol>
                                 <li v-for="(notice, index) in notices">
-                                    <p><b>{{notice.title}}</b></p>
-                                    <p>{{notice.description}}</p>
-                                    <p>{{notice.created}}</p>
+                                    <div class="alert alert-primary" role="alert">
+                                      <p><b>{{notice.title}}</b></p>
+                                    </div>
+                                    <p v-if="notice.descriptionView">{{notice.description}}</p>
+                                    <button v-on:click="switchDescriptionView(index)" class="btn btn-info btn-block">
+                                        details
+                                    </button>
+                                    <div class="alert alert-light" role="alert">
+                                        <p>{{notice.created}}</p>
+                                    </div>
                                 </li>
                             </ol>
                         </div>
                         <hr>
-                        <div class="footer  btn-primary btn-block text-center">
-                            <h1><i>{{footer}}</i></h1>
-                            <p><b>facebook</b> - <i>{{footer1}}</i></p>
-                            <p><b>email</b> - <i>{{footer2}}</i></p>
-                            <p><b>github</b> - <i>{{footer3}}</i></p>
+                        <div class="footer">
+                            <h1 class="d-flex justify-content-end"><i>{{footer}}</i></h1>
+                            <p class="d-flex justify-content-end"><b>facebook</b><i>{{footer1}}</i></p>
+                            <p class="d-flex justify-content-end"><b>email</b><i>{{footer2}}</i></p>
+                            <p class="d-flex justify-content-end"><b>github</b><i>{{footer3}}</i></p>
                         </div>
                     </div>
                     <!-- end template-main -->
@@ -101,7 +114,7 @@
                                 <h2>{{username}}</h2>
                             </div>
                             <h1 v-if="!adminLogged">Main</h1>
-                            <h1 v-if="adminLogged" v-on:click="switcher" class="btn btn-warning">           {{changeMainAdmin}}
+                            <h1 v-if="adminLogged" v-on:click="switcher" class="btn btn-warning btn-block">     {{changeMainAdmin}}
                             </h1>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, laboriosam. Ab neque sapiente error excepturi expedita quia ad, enim iusto sed omnis, assumenda ut adipisci esse doloremque illum labore voluptates!</p>
                         </div>
@@ -120,9 +133,19 @@
                                     </div>
                                     <button v-on:click="create" class="btn btn-success btn-block">Create</button>
                                 </form>
-                                <div class="box-msg" id="box-msg">
-                                    <p v-if="msgVoidView" class="text-center msgVoid">{{msgVoid}}</p>
-                                    <p v-if="msgCompleteView" class="text-center msgComplete">{{msgComplete}}</p>
+                                <div class="box-msg">
+                                    <div v-if="alerts.msgCreateVoidView" class="alert alert-danger text-center" role="alert">
+                                            {{alerts.msgCreateVoidText}}
+                                    </div>
+                                    <div v-if="alerts.msgCreateSuccessfulView" class="alert alert-success text-center" role="alert">
+                                            {{alerts.msgCreateSuccessfulText}}
+                                    </div>
+                                    <div v-if="alerts.msgDeleteView" class="alert alert-success text-center" role="alert">
+                                            {{alerts.msgDeleteText}}
+                                    </div>
+                                    <div v-if="alerts.msgUpdateSuccessfulView" class="alert alert-success text-center" role="alert">
+                                            {{alerts.msgUpdateSuccessfulText}}
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -138,17 +161,29 @@
                                             <label for="inputDescription">Description</label>
                                             <textarea v-model="noticeUpdateDescription" class="form-control" id="inputDescription" cols="30" rows="10"></textarea>
                                         </div>
-                                        <p class="updateText text-center">{{updateText}}</p>
                                         <button v-on:click="update2" class="btn btn-success btn-block">Update</button>
                                     </form>
+                                    <div class="box-msg">
+                                        <div v-if="alerts.msgUpdateVoidView" class="alert alert-danger text-center" role="alert">
+                                            {{alerts.msgUpdateVoidText}}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div v-else class="notUpdate">
                                     <h4>Manager</h4>
+                                    <div v-if="alerts.msgListNoticesVoidAdminView" class="alert alert-danger" role="alert">
+                                        <p class="noticesTextList"><i>{{alerts.msgListNoticesVoidAdminText}}</i></p>
+                                    </div>
                                     <ol>
                                         <li v-for="(notice, index) in notices">
-                                            <p><b>{{notice.title}}</b></p>
-                                            <p>{{notice.description}}</p>
-                                            <p>{{notice.created}}</p>
+                                            <div class="alert alert-primary" role="alert">
+                                              <p><b>{{notice.title}}</b></p>
+                                            </div>
+                                            <p v-if="notice.descriptionView">{{notice.description}}</p>
+                                            <button v-on:click="switchDescriptionView(index)" class="btn btn-info btn-block">details</button>
+                                            <div class="alert alert-light" role="alert">
+                                                <p>{{notice.created}}</p>
+                                            </div>
                                             <button v-on:click="update1({notice, index})" class="btn btn-warning">update</button>
                                             <button v-on:click="deleter({index})" class="btn btn-danger">delete</button>
                                         </li>
@@ -157,11 +192,11 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="footer  btn-primary btn-block text-center">
-                            <h1><i>{{footer}}</i></h1>
-                            <p><b>facebook</b> - <i>{{footer1}}</i></p>
-                            <p><b>email</b> - <i>{{footer2}}</i></p>
-                            <p><b>github</b> - <i>{{footer3}}</i></p>
+                        <div class="footer">
+                            <h1 class="d-flex justify-content-end"><i>{{footer}}</i></h1>
+                            <p class="d-flex justify-content-end"><b>facebook</b><i>{{footer1}}</i></p>
+                            <p class="d-flex justify-content-end"><b>email</b><i>{{footer2}}</i></p>
+                            <p class="d-flex justify-content-end"><b>github</b><i>{{footer3}}</i></p>
                         </div>
                     </div>
                     <!-- end template-admin -->

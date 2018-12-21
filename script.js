@@ -8,26 +8,44 @@ var app = new Vue({
 
         username: '',
         admin: 'admin',
-        loginText: '',
+        loginTextView: false,
         adminLogged: false,
 
         title: '',
         description: '',
 
         notices: [],
-        noticesText: 'the list of notices is empty',
-        noticesTextList: 'the list of notices is empty',
+        
+        //Alerts
+        alerts: {
+            msgLoginView: false,
+            msgLoginText: 'some field is empty',
 
-        msgVoidView: false,
-        msgVoid: 'some field is empty',
-        msgCompleteView: false,
-        msgComplete: 'notice save successful',
+            msgListNoticesVoidMainView: false,
+            msgListNoticesVoidMainText: 'the list of notices is empty',
+
+            msgCreateVoidView: false,
+            msgCreateVoidText: 'some field is empty ',
+            msgCreateSuccessfulView: false,
+            msgCreateSuccessfulText: 'notice created successful',
+
+            msgUpdateVoidView: false,
+            msgUpdateVoidText: 'some field is empty ',
+            msgUpdateSuccessfulView: false,
+            msgUpdateSuccessfulText: 'notice updated successful',
+
+            msgDeleteView: false,
+            msgDeleteText: 'notice delete successful',
+
+            msgListNoticesVoidAdminView: false,
+            msgListNoticesVoidAdminText: 'the list of notices is empty',
+        },
+        //end Alers
 
         updateState: false,
         noticeUpdateId: '',
         noticeUpdateTitle : '',
         noticeUpdateDescription: '',
-        updateText: '',
 
         headerUsers: 'Welcome to Blog!',
         headerAdmin: 'Welcome to CMS!',
@@ -48,10 +66,13 @@ var app = new Vue({
                 if (this.username == this.admin) {
                     this.adminLogged = true;
                     this.templateAdmin = false;
+                }else{
+                    this.adminLogged = false;
+                    this.templateAdmin = false;
                 }
-                this.loginText = '';
+                this.alerts.msgLoginView = false;
             }else{
-                this.loginText = 'some field is empty';
+                this.alerts.msgLoginView = true;
             }
             this.compNotices();
         },//end login
@@ -70,36 +91,16 @@ var app = new Vue({
             this.templateAdmin= false;
 
             this.username= '';
-            this.admin= 'admin';
             this.loginText= '';
-            this.adminLogged= false;
 
             this.title= '';
             this.description= '';
-
-            //notices: [],
-            //noticesText: 'the list of notices is empty',
-            //noticesTextList: 'the list of notices is empty',
-
-            //msgVoidView: false,
-            //msgVoid: 'some field is empty',
-            //msgCompleteView: false,
-            //msgComplete: 'notice save successful',
 
             this.updateState= false;
             this.noticeUpdateId= '';
             this.noticeUpdateTitle= '';
             this.noticeUpdateDescription= '';
             this.updateText= '';
-
-            //headerUsers: 'Welcome to Blog!',
-            //headerAdmin: 'Welcome to CMS!',
-            //footer: 'Created by Jesús García',
-            //footer1: 'https://www.facebook.com/profile.php?id=100003378198767',
-            //footer2: 'jesus.g.jg7@gmail.com',
-            //footer3: 'https://github.com/jesusnaxcs',
-
-            //changeMainAdmin: 'Main/Admin <-- Click here to change',
 
         },//end logout
         create: function(e){
@@ -108,14 +109,21 @@ var app = new Vue({
                 this.notices.push({
                     title: this.title,
                     description: this.description,
+                    descriptionView: false,
                     created: new Date()
                 });
-                this.msgCompleteView = true;
-                this.msgVoidView = false;
-                localStorage.setItem('blog-vue', JSON.stringify(this.notices));
+                this.alerts.msgCreateSuccessfulView = true;
+                this.alerts.msgCreateVoidView = false;
+                this.alerts.msgDeleteView = false;
+                this.alerts.msgUpdateSuccessfulView = false;
+                this.alerts.msgUpdateVoidView = false;
+                localStorage.setItem('cms-vue-notices', JSON.stringify(this.notices));
             }else{
-                this.msgVoidView = true;
-                this.msgCompleteView = false;
+                this.alerts.msgCreateSuccessfulView = false;
+                this.alerts.msgCreateVoidView = true;
+                this.alerts.msgDeleteView = false;
+                this.alerts.msgUpdateSuccessfulView = false;
+                this.alerts.msgUpdateVoidView = false;
             }//end else
             this.title = '';
             this.description = '';
@@ -138,20 +146,30 @@ var app = new Vue({
         update2: function(e){
             e.preventDefault();
             if (this.validationUpdate()) {
-            this.notices[this.noticeUpdateId] = {
-                title: this.noticeUpdateTitle,
-                description: this.noticeUpdateDescription,
-                created: new Date()
-            }
-            this.updateText = '';
-            this.noticeUpdateId = '';
-            this.noticeUpdateTitle = '';
-            this.noticeUpdateDescription = '';
-            this.updateState=false;
-            this.compNotices();
-            localStorage.setItem('blog-vue', JSON.stringify(this.notices));
+                this.notices[this.noticeUpdateId] = {
+                    title: this.noticeUpdateTitle,
+                    description: this.noticeUpdateDescription,
+                    descriptionView: false,
+                    created: new Date()
+                }
+                localStorage.setItem('cms-vue-notices', JSON.stringify(this.notices));
+                this.updateText = '';
+                this.noticeUpdateId = '';
+                this.noticeUpdateTitle = '';
+                this.noticeUpdateDescription = '';
+                this.updateState=false;
+                this.compNotices();
+                this.alerts.msgCreateSuccessfulView = false;
+                this.alerts.msgCreateVoidView = false;
+                this.alerts.msgDeleteView = false;
+                this.alerts.msgUpdateSuccessfulView = true;
+                this.alerts.msgUpdateVoidView = false;
             }else{
-                this.updateText = 'some field is empty';
+                this.alerts.msgCreateSuccessfulView = false;
+                this.alerts.msgCreateVoidView = false;
+                this.alerts.msgDeleteView = false;
+                this.alerts.msgUpdateSuccessfulView = false;
+                this.alerts.msgUpdateVoidView = true;
             }//end else
         },//end update2
         validationUpdate: function(){
@@ -164,7 +182,12 @@ var app = new Vue({
         deleter: function(index){
             this.notices.splice(index.index,1);
             this.compNotices();
-            localStorage.setItem('blog-vue', JSON.stringify(this.notices));
+            localStorage.setItem('cms-vue-notices', JSON.stringify(this.notices));
+            this.alerts.msgCreateSuccessfulView = false;
+            this.alerts.msgCreateVoidView = false;
+            this.alerts.msgDeleteView = true;
+            this.alerts.msgUpdateSuccessfulView = false;
+            this.alerts.msgUpdateVoidView = false;
         },//end deleter
         switcher: function(){
             this.templateMain = !this.templateMain;
@@ -173,14 +196,22 @@ var app = new Vue({
         },// end switcher
         compNotices: function(){
             if (this.notices.length == 0) {
-               this.noticesTextList = 'the list of notices is empty';
+               this.alerts.msgListNoticesVoidMainView = true;
+               this.alerts.msgListNoticesVoidAdminView = true;
             }else{
-                this.noticesTextList = '';
+                this.alerts.msgListNoticesVoidMainView = false;
+                this.alerts.msgListNoticesVoidAdminView = false;
             }//end else
         },//end compNotices
+        switchDescriptionView: function(index){
+            this.notices[index].descriptionView = !this.notices[index].descriptionView;
+            let storage = localStorage.setItem('cms-vue-notices', JSON.stringify(this.notices));
+            let datesDB = JSON.parse(localStorage.getItem('cms-vue-notices'));
+            this.notices = datesDB;
+        },//end switchDescriptionView
     },//end methods
     created: function(){
-        let datesDB = JSON.parse(localStorage.getItem('blog-vue'));
+        let datesDB = JSON.parse(localStorage.getItem('cms-vue-notices'));
         if (datesDB === null) {
             this.notices = [];
         }else{

@@ -1,12 +1,3 @@
-.msgVoid, .loginText, .updateText, .noticesTextList{
-	color: red;
-}
-.msgComplete{
-	color: green;
-}
-.form-inline{
-	margin: auto;
-}
 .footer, h1, p, b, i{
 	margin: 0px;
 	padding: 0px;
