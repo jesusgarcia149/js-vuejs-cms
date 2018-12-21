@@ -61,6 +61,7 @@
                             <div class="heater-title btn btn-primary btn-block">
                                 <h1>{{headerUsers}}</h1>
                                 <h2>{{username}}</h2>
+                                <button v-on:click="logout" class="btn btn-danger">logout</button>
                             </div>
                             <h1 v-if="!adminLogged">Main</h1>
                             <h1 v-if="adminLogged" v-on:click="switcher" class="btn btn-warning">           {{changeMainAdmin}}
@@ -115,7 +116,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescription">Description</label>
-                                        <input v-model="description" class="form-control" type="text" id="inputDescription">
+                                        <textarea v-model="description" class="form-control" id="inputDescription" cols="30" rows="10"></textarea>
                                     </div>
                                     <button v-on:click="create" class="btn btn-success btn-block">Create</button>
                                 </form>
@@ -135,7 +136,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputDescription">Description</label>
-                                            <input v-model="noticeUpdateDescription" class="form-control" type="text" id="inputDescription" value="">
+                                            <textarea v-model="noticeUpdateDescription" class="form-control" id="inputDescription" cols="30" rows="10"></textarea>
                                         </div>
                                         <p class="updateText text-center">{{updateText}}</p>
                                         <button v-on:click="update2" class="btn btn-success btn-block">Update</button>

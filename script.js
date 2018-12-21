@@ -36,7 +36,7 @@ var app = new Vue({
         footer2: 'jesus.g.jg7@gmail.com',
         footer3: 'https://github.com/jesusnaxcs',
 
-        changeMainAdmin: 'Main/Admin <-- Click here to change',
+        changeMainAdmin: 'Main/Admin <= Click here to change',
 
     },//endData
     methods: {
@@ -62,6 +62,46 @@ var app = new Vue({
                 return true;
             }
         },//end validationLogin
+        logout: function(e){
+
+            e.preventDefault();
+            this.templateLogin= true;
+            this.templateMain= false;
+            this.templateAdmin= false;
+
+            this.username= '';
+            this.admin= 'admin';
+            this.loginText= '';
+            this.adminLogged= false;
+
+            this.title= '';
+            this.description= '';
+
+            //notices: [],
+            //noticesText: 'the list of notices is empty',
+            //noticesTextList: 'the list of notices is empty',
+
+            //msgVoidView: false,
+            //msgVoid: 'some field is empty',
+            //msgCompleteView: false,
+            //msgComplete: 'notice save successful',
+
+            this.updateState= false;
+            this.noticeUpdateId= '';
+            this.noticeUpdateTitle= '';
+            this.noticeUpdateDescription= '';
+            this.updateText= '';
+
+            //headerUsers: 'Welcome to Blog!',
+            //headerAdmin: 'Welcome to CMS!',
+            //footer: 'Created by Jesús García',
+            //footer1: 'https://www.facebook.com/profile.php?id=100003378198767',
+            //footer2: 'jesus.g.jg7@gmail.com',
+            //footer3: 'https://github.com/jesusnaxcs',
+
+            //changeMainAdmin: 'Main/Admin <-- Click here to change',
+
+        },//end logout
         create: function(e){
             e.preventDefault();
             if (this.validationCreate()) {
