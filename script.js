@@ -112,6 +112,7 @@ var app = new Vue({
                 });
                 this.msgCompleteView = true;
                 this.msgVoidView = false;
+                localStorage.setItem('blog-vue', JSON.stringify(this.notices));
             }else{
                 this.msgVoidView = true;
                 this.msgCompleteView = false;
@@ -148,6 +149,7 @@ var app = new Vue({
             this.noticeUpdateDescription = '';
             this.updateState=false;
             this.compNotices();
+            localStorage.setItem('blog-vue', JSON.stringify(this.notices));
             }else{
                 this.updateText = 'some field is empty';
             }//end else
@@ -162,6 +164,7 @@ var app = new Vue({
         deleter: function(index){
             this.notices.splice(index.index,1);
             this.compNotices();
+            localStorage.setItem('blog-vue', JSON.stringify(this.notices));
         },//end deleter
         switcher: function(){
             this.templateMain = !this.templateMain;
@@ -176,4 +179,12 @@ var app = new Vue({
             }//end else
         },//end compNotices
     },//end methods
+    created: function(){
+        let datesDB = JSON.parse(localStorage.getItem('blog-vue'));
+        if (datesDB === null) {
+            this.notices = [];
+        }else{
+            this.notices = datesDB;
+        }
+    },//end created
 })//end app
