@@ -209,8 +209,23 @@ var app = new Vue({
             let datesDB = JSON.parse(localStorage.getItem('cms-vue-notices'));
             this.notices = datesDB;
         },//end switchDescriptionView
+        createAdminAccount: function(){
+            let adminDB = localStorage.getItem('cms-vue-admin');
+            if (adminDB === null) {
+                adminAcount = prompt('Choose your admin account');
+                if (adminAcount == '' || adminAcount == null) {
+                    this.createAdminAccount();
+                }else{
+                    this.admin = adminAcount;
+                    localStorage.setItem('cms-vue-admin', adminAcount);
+                }
+            }else{
+                this.admin = adminDB;
+            }
+        },//end createAdminAccount
     },//end methods
     created: function(){
+        this.createAdminAccount();
         let datesDB = JSON.parse(localStorage.getItem('cms-vue-notices'));
         if (datesDB === null) {
             this.notices = [];

@@ -13,10 +13,6 @@
         <script src="vue.js"></script>
     </head>
     <body>
-        <!-- <div class="texto" contenteditable="true">
-            Texto editable
-        </div> -->
-
         <!-- app -->
         <div id="app">
             <div class="container">
@@ -40,7 +36,7 @@
                                 <div class="col-md text-center ">
                                     <input v-model="username" class="form-control" type="text" id="username" placeholder="username">
                                 </div>
-                                <p><i>Account of administrator is "admin"</i></p>
+                                <p><i>Account of administrator is "{{admin}}"</i></p>
                                 <div v-if="alerts.msgLoginView" class="alert alert-danger justify-content-center" role="alert">
                                     {{alerts.msgLoginText}}
                                 </div>
