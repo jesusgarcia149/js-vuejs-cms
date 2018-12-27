@@ -2,3 +2,7 @@
 	margin: 0px;
 	padding: 0px;
 }
+
+.word-wrap {
+	word-wrap: break-word;
+}

@@ -48,9 +48,9 @@
                         <hr>
                         <div class="footer">
                             <h1 class="d-flex justify-content-end"><i>{{footer}}</i></h1>
-                            <p class="d-flex justify-content-end"><b>facebook</b><i>{{footer1}}</i></p>
-                            <p class="d-flex justify-content-end"><b>email</b><i>{{footer2}}</i></p>
-                            <p class="d-flex justify-content-end"><b>github</b><i>{{footer3}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>facebook</strong><i>{{footer1}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>email</strong><i>{{footer2}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>github</strong><i>{{footer3}}</i></p>
                         </div>
                     </div>
                     <!-- end template-login -->
@@ -62,8 +62,8 @@
                     <div v-if="templateMain" class="template-main col-md-12">
                         <div class="header">
                             <div class="heater-title btn btn-primary btn-block">
-                                <h1>{{headerUsers}}</h1>
-                                <h2>{{username}}</h2>
+                                <h1 class="word-wrap">{{headerUsers}}</h1>
+                                <h2 class="word-wrap">{{username}}</h2>
                                 <button v-on:click="logout" class="btn btn-danger btn-block">logout</button>
                             </div>
                             <hr>
@@ -81,9 +81,9 @@
                             <ol>
                                 <li v-for="(notice, index) in notices">
                                     <div class="alert alert-primary" role="alert">
-                                      <p><b>{{notice.title}}</b></p>
+                                      <p class="word-wrap"><strong>{{notice.title}}</strong></p>
                                     </div>
-                                    <p v-if="notice.descriptionView">{{notice.description}}</p>
+                                    <p class="word-wrap" v-if="notice.descriptionView">{{notice.description}}</p>
                                     <button v-on:click="switchDescriptionView(index)" class="btn btn-info btn-block">
                                         details
                                     </button>
@@ -96,9 +96,9 @@
                         <hr>
                         <div class="footer">
                             <h1 class="d-flex justify-content-end"><i>{{footer}}</i></h1>
-                            <p class="d-flex justify-content-end"><b>facebook</b><i>{{footer1}}</i></p>
-                            <p class="d-flex justify-content-end"><b>email</b><i>{{footer2}}</i></p>
-                            <p class="d-flex justify-content-end"><b>github</b><i>{{footer3}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>facebook</strong><i>{{footer1}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>email</strong><i>{{footer2}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>github</strong><i>{{footer3}}</i></p>
                         </div>
                     </div>
                     <!-- end template-main -->
@@ -177,9 +177,9 @@
                                     <ol>
                                         <li v-for="(notice, index) in notices">
                                             <div class="alert alert-primary" role="alert">
-                                              <p><b>{{notice.title}}</b></p>
+                                              <p class="word-wrap"><strong>{{notice.title}}</strong></p>
                                             </div>
-                                            <p v-if="notice.descriptionView">{{notice.description}}</p>
+                                            <p class="word-wrap" v-if="notice.descriptionView">{{notice.description}}</p>
                                             <button v-on:click="switchDescriptionView(index)" class="btn btn-info btn-block">details</button>
                                             <div class="alert alert-light" role="alert">
                                                 <p>{{notice.created}}</p>
@@ -194,9 +194,9 @@
                         <hr>
                         <div class="footer">
                             <h1 class="d-flex justify-content-end"><i>{{footer}}</i></h1>
-                            <p class="d-flex justify-content-end"><b>facebook</b><i>{{footer1}}</i></p>
-                            <p class="d-flex justify-content-end"><b>email</b><i>{{footer2}}</i></p>
-                            <p class="d-flex justify-content-end"><b>github</b><i>{{footer3}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>facebook</strong><i>{{footer1}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>email</strong><i>{{footer2}}</i></p>
+                            <p class="d-flex justify-content-end"><strong>github</strong><i>{{footer3}}</i></p>
                         </div>
                     </div>
                     <!-- end template-admin -->
